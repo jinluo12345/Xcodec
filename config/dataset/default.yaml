@@ -1,0 +1,20 @@
+dataset:
+  _target_: data_module.FSDataset_add_STFT
+
+train:
+  filelist: /remote-home1/lzjjin/X-Codec-2.0/filelists/librispeech_train.txt
+  batch_size: 2
+  shuffle: true
+
+val:
+  filelist: /remote-home1/lzjjin/X-Codec-2.0/filelists/librispeech_val.txt
+  batch_size:  4
+  shuffle: false
+
+test:
+  filelist: /remote-home1/lzjjin/X-Codec-2.0/filelists/librispeech_test.txt
+  batch_size: 1
+  shuffle: false
+padding_idx: 0
+frame_length: 200
+min_audio_length: 96000
