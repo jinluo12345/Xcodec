@@ -129,6 +129,5 @@ wandb==0.18.1
 xxhash==3.5.0
 yarl==1.12.1
 zipp==3.20.2
-shutil
 s3prl
 pystoi
