@@ -384,6 +384,7 @@ class CodecLightningModule(pl.LightningModule):
         self.validation_step_outputs.append(eval_out)
         shutil.rmtree(target_wav_dir)
 
+
             
         
  
@@ -406,10 +407,11 @@ class CodecLightningModule(pl.LightningModule):
         if self.trainer.is_global_zero:
             world_size = torch.distributed.get_world_size()
             all_rank_files = [os.path.join(temp_dir, f"temp_val_metrics_rank{r}.pth") for r in range(world_size)]
-            
+            import pdb
+            pdb.set_trace()
             start_time = time.time()
             while not all(os.path.exists(f) for f in all_rank_files):
-                 if time.time() - start_time > 300:  
+                 if time.time() - start_time > 600:  
                      raise TimeoutError("等待其他 rank 验证结果超时")
                  time.sleep(1)
 
@@ -458,7 +460,7 @@ class CodecLightningModule(pl.LightningModule):
             signal_file = os.path.join(temp_dir, "val_done_signal")
             start_time = time.time()
             while not os.path.exists(signal_file):
-                if time.time() - start_time > 300:  
+                if time.time() - start_time > 600:  
                     raise TimeoutError("等待主 rank 完成超时")
                 time.sleep(1)
             if os.path.exists(rank_file):

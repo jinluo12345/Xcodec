@@ -24,7 +24,7 @@ seed_everything(seed)
 def train(cfg):
     checkpoint_callback = ModelCheckpoint(dirpath=cfg.log_dir, 
                             save_top_k=-1, save_last=True,
-                            every_n_train_steps=20000, monitor='mel_loss', mode='min')
+                            every_n_train_steps=10000, monitor='mel_loss', mode='min')
 
     lr_monitor = LearningRateMonitor(logging_interval='step')
     callbacks = [checkpoint_callback, lr_monitor]
@@ -38,7 +38,7 @@ def train(cfg):
         config=OmegaConf.to_container(cfg, resolve=True)  # 将 Hydra 配置转换为字典并传递
     )    
 
-    ckpt_path = None
+    ckpt_path = '/remote-home1/lzjjin/X-Codec-2.0/outputs/2025-02-27/14-13-32/log/epoch=0-step=21000.ckpt'
     last_ckpt = os.path.join(cfg.log_dir, 'last.ckpt')
     if os.path.exists(last_ckpt):
         ckpt_path = last_ckpt
@@ -58,7 +58,7 @@ def train(cfg):
     torch.backends.cudnn.benchmark = True  
     # lightning_module.strict_loading = False
     # LightningModule.strict_loading = True
-    trainer.fit(lightning_module, datamodule=datamodule,ckpt_path=ckpt_path )
+    trainer.fit(lightning_module, datamodule=datamodule,ckpt_path=None )
     print(f'Training ends, best score: {checkpoint_callback.best_model_score}, ckpt path: {checkpoint_callback.best_model_path}')
 
 if __name__ == '__main__':
