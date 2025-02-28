@@ -15,8 +15,8 @@ from data_module import DataModule
 from lightning_module import CodecLightningModule
 from pytorch_lightning.loggers import WandbLogger
 from omegaconf import OmegaConf
-import shutup
-shutup.please()
+import os
+os.environ["WANDB_API_KEY"] = "84ca8c6c885fe483ff1668004110693b2c7f5749"  # 替换为你的API Key
 seed = 1024
 seed_everything(seed)
  
